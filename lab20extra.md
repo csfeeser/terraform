@@ -1,6 +1,6 @@
 ## Lab 20 Challenge
 
-Replace your `locals` block this this.
+Replace your `locals` block with this.
 
 ```
 locals {

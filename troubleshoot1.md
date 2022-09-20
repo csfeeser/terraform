@@ -8,7 +8,7 @@
 
     `student@bchd:~$` `sudo docker ps`
 
-0. If there are any, let's wipe them out. Check your `groups` to see if you are part of the `docker` group.
+0. If there are any, let's wipe them out (no need to use `terraform destroy` in this case). Check your `groups` to see if you are part of the `docker` group.
 
     `student@bchd:~$` `groups`
 

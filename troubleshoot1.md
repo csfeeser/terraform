@@ -41,3 +41,51 @@
 0. **Here's my recommendation.** Use `terraform init` and `terraform apply` (or try to anyway) and observe the errors. Rather than trying to fix every error you see, try to fix whatever issue is causing the error message each time you try to run Terraform.
 
 0. When `sudo docker ps` shows a running container then you'll know you've succeeded :)
+
+### SOLUTION:
+
+```
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 2.13.0"
+    }
+  }
+}
+
+variable "container_name" {
+  description = "Value of the name for the Docker container"
+  # basic types include string, number and bool
+  type    = string
+  default = "ExampleNginxContainer"
+  }
+
+output "container_id" {
+  description = "ID of the Docker container"
+  value       = docker_container.nginx.id
+}
+
+output "image_id" {
+  description = "ID of the Docker image"
+  value       = docker_image.nginx.id
+}
+
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = true
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.latest
+  name  = var.container_name
+  ports {
+    internal = 80
+    external = 8089
+  }
+}
+
+
+
+provider "docker" {}
+```

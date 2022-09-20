@@ -44,6 +44,8 @@
 
 ### SOLUTION:
 
+Make sure you are in the `docker` group and rename `main` to `main.tf`
+
 ```
 terraform {
   required_providers {

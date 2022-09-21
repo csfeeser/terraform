@@ -1,5 +1,7 @@
 ## Warming up with Loops!
 
+<img src="https://miro.medium.com/max/651/1*feDY6Noa9b7WmizyIMcASQ.jpeg" alt="drawing" width="300"/>
+
 Yesterday we were able to put Terraform into actual practice by automating the creation of infrastructure on Azure. The next step you'll want to take is by doing more with less... by using loops!
 
 #### PART 1:

@@ -24,7 +24,7 @@ resource "null_resource" "dummy_rgs" {
 
 #### PART 2:
 A glutton for punishment, eh?
-#### PART 1:
+
 - Take the module below. We'll use `null_resource` because not everyone has access to Azure. 
 - You'll need to tweak your `for_each` with the "dummy_rgs" resource block; loop over the `rgs` variable in `locals`.
 - Now we need to create *vnets* (still only using `null_resource`). Again using `for_each`, create three vnets from the `locals` block. Respectively, the vnet name/region should be `{omega: eastus, psi: southindia, chi: westus2}`

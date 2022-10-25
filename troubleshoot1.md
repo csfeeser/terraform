@@ -24,7 +24,7 @@
 - [docker/kreuzwerker docker_container syntax](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container)
 - The most recent version of nginx is `1.23.2`
 
-<!--
+
 ### SOLUTION:
 
 Make sure you are in the `docker` group and rename `main` to `main.tf`

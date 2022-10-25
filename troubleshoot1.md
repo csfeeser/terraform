@@ -4,33 +4,11 @@
 
 ### Getting Set Up
 
-1. First check and see if you have any containers still running from yesterday.
-
-    `student@bchd:~$` `sudo docker ps`
-
-0. If there are any, let's wipe them out (no need to use `terraform destroy` in this case). Check your `groups` to see if you are part of the `docker` group.
-
-    `student@bchd:~$` `groups`
-
-0. Do you see `docker` listed? If not, run these steps:
-
-    `student@bchd:~$` `sudo usermod -aG docker student`  
-    `student@bchd:~$` `su - $USER`  
-    > password is alta3
-
-0. Now run this command to **stop** and **remove** all containers.
+1. Chances are we still have a lot of Docker containers running from un-destroyed TerraForm deployments. Run this command to **stop** and **remove** all containers.
 
     `student@bchd:~$` `sudo docker stop $(docker ps -aq) && sudo docker rm $(docker ps -aq)`
 
-0. Close any open tmux tabs you have! Keep typing `exit` or press *ctrl d* repeatedly until this shows up:
-
-    <img src="https://github.com/csfeeser/terraform/blob/main/scripts/connectionclosed.png?raw=true" alt="drawing" width="300"/>
-
-0. But don't worry! Just refresh your browser and you're good to go!
-
-### WARMUP OBJECTIVE:
-
-1. Create a new directory and move into it.
+0. Create a new directory and move into it.
 
     `student@bchd:~$` `mkdir -p ~/mycode/troubleshoot && cd ~/mycode/troubleshoot`
     
@@ -55,6 +33,9 @@ terraform {
     }
   }
 }
+
+
+provider "docker" {}
 
 variable "container_name" {
   description = "Value of the name for the Docker container"
@@ -86,8 +67,4 @@ resource "docker_container" "nginx" {
     external = 8089
   }
 }
-
-
-
-provider "docker" {}
 ```

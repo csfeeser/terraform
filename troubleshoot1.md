@@ -2,8 +2,6 @@
 
 <img src="https://preview.redd.it/0ual75xi5ri01.jpg?auto=webp&s=7dca4f4d1a1b53bb36674b9431112e961a53f26d" alt="drawing" width="300"/>
 
-### Getting Set Up
-
 1. Chances are we still have a lot of Docker containers running from un-destroyed TerraForm deployments. Run this command to **stop** and **remove** all containers.
 
     `student@bchd:~$` `sudo docker stop $(docker ps -aq) && sudo docker rm $(docker ps -aq)`
@@ -16,10 +14,17 @@
 
     `student@bchd:~$` `wget https://raw.githubusercontent.com/csfeeser/terraform/main/scripts/main ~/mycode/troubleshoot/main -q`
 
-0. **Here's my recommendation.** Use `terraform init` and `terraform apply` (or try to anyway) and observe the errors. Rather than trying to fix every error you see, try to fix whatever issue is causing the error message each time you try to run Terraform.
+0. **Here's my recommendation.** Use `terraform init` and `terraform validate` (or try to anyway) and observe the errors. Rather than trying to fix every error you see right away, try to fix whatever issue is causing the error message each time you try to run Terraform.
 
-0. When `sudo docker ps` shows a running container then you'll know you've succeeded :)
+0. When the command `curl localhost:8089` returns HTML to an nginx welcome page, you know you've succeeded!
 
+**BONUS**: Can you get this to run without a deprecation error? 
+
+- [docker/kreuzwerker docker_image syntax](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/image)
+- [docker/kreuzwerker docker_container syntax](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container)
+- The most recent version of nginx is `1.23.2`
+
+<!--
 ### SOLUTION:
 
 Make sure you are in the `docker` group and rename `main` to `main.tf`

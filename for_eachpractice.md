@@ -56,6 +56,7 @@ resource "null_resource" "dummy_vnets" {
 }
 ```
 
+<!--
 ### SOLUTIONS
 
 PART 1

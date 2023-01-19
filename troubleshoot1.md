@@ -27,8 +27,9 @@
 
 <details>
 <summary>SOLUTION</summary>
+<br>  
     
-Rename `main` to `main.tf` --> `mv main main.tf`
+***FIRST, rename `main` to `main.tf` -->*** `mv main main.tf`
 
 ```java
 terraform {                             # TERRAFORM BLOCK WAS MISSING

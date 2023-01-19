@@ -12,7 +12,7 @@
     
 0. Run the following command to grab a busted Terraform module! Your job is to repair the code blocks and get it running!
 
-    `student@bchd:~$` `wget https://raw.githubusercontent.com/csfeeser/terraform/main/scripts/main ~/mycode/troubleshoot/main -q`
+    `student@bchd:~/mycode/troubleshoot$` `wget https://raw.githubusercontent.com/csfeeser/terraform/main/scripts/main ~/mycode/troubleshoot/main -q`
 
 0. **Here's my recommendation.** Use `terraform init` and `terraform validate` (or try to anyway) and observe the errors. Rather than trying to fix every error you see right away, try to fix whatever issue is causing the error message each time you try to run Terraform.
 

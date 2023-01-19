@@ -2,9 +2,9 @@
 
 <img src="https://blog.scottlogic.com/cmeehan/assets/meme.jpg" width="400"/>
 
-1. Chances are we still have a lot of Docker containers running from un-destroyed TerraForm deployments. Run this command to **stop** and **remove** all containers.
+1. Chances are we still have a lot of Docker containers and images running from un-destroyed TerraForm deployments. Run this command to **remove** all containers/images.
 
-    `student@bchd:~$` `sudo docker stop $(docker ps -aq) && sudo docker rm $(docker ps -aq)`
+    `student@bchd:~$` `docker rm -vf $(docker ps -aq) && docker rmi -f $(docker images -aq)`
 
 0. Create a new directory and move into it.
 
@@ -35,19 +35,19 @@ terraform {                             # TERRAFORM BLOCK WAS MISSING
   required_providers {
     docker = {
       source  = "kreuzwerker/docker"
-      version = "~> 2.22.0"
+      version = "~> 2.22.0"             $ USE THE CORRECT VERSION
     }
   }
 }                                       
 
 provider "docker" {}
 
-variable "container_name" {                                         # MISSING VARIABLE BLOCK
-  description = "Value of the name for the Docker container"
-  # basic types include string, number and bool
-  type    = string
-  default = "ExampleNginxContainer"
-  }
+variable "container_name" {                                         # THIS
+  description = "Value of the name for the Docker container"        # VARIABLE
+  # basic types include string, number and bool                     # BLOCK
+  type    = string                                                  # WAS
+  default = "ExampleNginxContainer"                                 # MISSING
+  }                                                                 # !
 
 output "container_id" {
   description = "ID of the Docker container"
@@ -60,7 +60,7 @@ output "image_id" {
 }
 
 resource "docker_image" "nginx" {
-  name         = "nginx:1.23.2"            # USING VERSION NUMBER INSTEAD OF LATEST
+  name         = "nginx:1.23.2"            # USING VERSION NUMBER INSTEAD OF "LATEST"
   keep_locally = true
 }
 

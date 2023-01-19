@@ -22,7 +22,7 @@
 
 - [docker/kreuzwerker docker_image syntax](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/image)
 - [docker/kreuzwerker docker_container syntax](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container)
-- The most recent version of nginx is `1.23.2`
+- A recent, stable version of nginx is `1.23.2`
 
 
 ### SOLUTION:
@@ -38,7 +38,6 @@ terraform {
     }
   }
 }
-
 
 provider "docker" {}
 
@@ -60,7 +59,7 @@ output "image_id" {
 }
 
 resource "docker_image" "nginx" {
-  name         = "nginx:latest"
+  name         = "nginx:1.23.2"
   keep_locally = true
 }
 

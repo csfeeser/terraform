@@ -1,6 +1,6 @@
 # Morning Warmup: TROUBLESHOOTING!
 
-<img src="https://preview.redd.it/0ual75xi5ri01.jpg?auto=webp&s=7dca4f4d1a1b53bb36674b9431112e961a53f26d" alt="drawing" width="300"/>
+<img src="https://blog.scottlogic.com/cmeehan/assets/meme.jpg" width="400"/>
 
 1. Chances are we still have a lot of Docker containers running from un-destroyed TerraForm deployments. Run this command to **stop** and **remove** all containers.
 
@@ -25,11 +25,12 @@
 - A recent, stable version of nginx is `1.23.2`
 
 
-### SOLUTION:
+<details>
+<summary>SOLUTION</summary>
+    
+Rename `main` to `main.tf` --> `mv main main.tf`
 
-Make sure you are in the `docker` group and rename `main` to `main.tf`
-
-```
+```java
 terraform {
   required_providers {
     docker = {
@@ -72,3 +73,4 @@ resource "docker_container" "nginx" {
   }
 }
 ```
+</details>

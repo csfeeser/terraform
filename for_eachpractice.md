@@ -2,10 +2,10 @@
 
 <img src="https://miro.medium.com/max/651/1*feDY6Noa9b7WmizyIMcASQ.jpeg" alt="drawing" width="300"/>
 
-Yesterday we were able to put Terraform into actual practice by automating the creation of infrastructure on Azure. The next step you'll want to take is by doing more with less... by using loops!
+Yesterday we started exploring the wonderful world of loops in Terraform!Today we'll try to apply it a bit more practically!
 
 #### PART 1:
-- Take the module below. We'll use `null_resource` because not everyone has access to Azure. 
+- Take the module below. We'll use `null_resource`, but pretend we're creating resource groups in Azure. 
 - Add a `for_each` meta-argument to the resource block; loop over the `rgs` variable in `locals`.
 - `[alpha, bravo, charlie]` are the names of the "resource groups," and `[eastus, southindia, westus2]` are the regions!
 
@@ -49,8 +49,8 @@ resource "null_resource" "dummy_rgs" {
 #### PART 2:
 A glutton for punishment, eh?
 
-- Take the module below. We'll use `null_resource` because not everyone has access to Azure. 
-- You'll need to tweak your `for_each` with the "dummy_rgs" resource block; loop over the `rgs` variable in `locals`.
+- Take the module below. We'll use `null_resource` again but this time we'remaking resource groups AND vnets! 
+- The data in locals is different this time. Create the three resource groups as before.
 - Now we need to create *vnets* (still only using `null_resource`). Again using `for_each`, create three vnets from the `locals` block. Respectively, the vnet name/region should be `{omega: eastus, psi: southindia, chi: westus2}`
 
 ```

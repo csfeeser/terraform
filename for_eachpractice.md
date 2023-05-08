@@ -9,7 +9,7 @@ Yesterday we started exploring the wonderful world of loops in Terraform!Today w
 - Add a `for_each` meta-argument to the resource block; loop over the `rgs` variable in `locals`.
 - `[alpha, bravo, charlie]` are the names of the "resource groups," and `[eastus, southindia, westus2]` are the regions!
 
-```
+```terraform
 locals {  rgs = {
           "alpha" = "eastus"
           "bravo" = "southindia"
@@ -28,7 +28,7 @@ resource "null_resource" "dummy_rgs" {
 <summary>PART 1 SOLUTION</summary>
 <br>
           
-```
+```terraform
 locals {  rgs = {
           "alpha" = "eastus"
           "bravo" = "southindia"
@@ -53,7 +53,7 @@ A glutton for punishment, eh?
 - The data in locals is different this time. Create the three resource groups as before.
 - Now we need to create *vnets* (still only using `null_resource`). Again using `for_each`, create three vnets from the `locals` block. Respectively, the vnet name/region should be `{omega: eastus, psi: southindia, chi: westus2}`
 
-```
+```terraform
 locals {  rgs = {
           "alpha" = { "region" ="eastus"
                       "vnet" ="omega" }
@@ -87,7 +87,7 @@ resource "null_resource" "dummy_vnets" {
 <summary>PART 2 SOLUTION</summary>
 <br>
           
-```
+```terraform
 locals {  rgs = {
           "alpha" = { "region" ="eastus"
                       "vnet" ="omega" }

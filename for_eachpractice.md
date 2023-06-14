@@ -49,7 +49,7 @@ resource "null_resource" "dummy_rgs" {
 #### PART 2:
 A glutton for punishment, eh?
 
-- Take the module below. We'll use `null_resource` again but this time we'remaking resource groups AND vnets! 
+- Take the module below. We'll use `null_resource` again but this time we're making resource groups AND vnets! 
 - The data in locals is different this time. Create the three resource groups as before.
 - Now we need to create *vnets* (still only using `null_resource`). Again using `for_each`, create three vnets from the `locals` block. Respectively, the vnet name/region should be `{omega: eastus, psi: southindia, chi: westus2}`
 

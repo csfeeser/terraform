@@ -2,7 +2,7 @@
 
 <img src="https://miro.medium.com/max/651/1*feDY6Noa9b7WmizyIMcASQ.jpeg" alt="drawing" width="300"/>
 
-Yesterday we started exploring the wonderful world of loops in Terraform!Today we'll try to apply it a bit more practically!
+Yesterday we started exploring the wonderful world of loops in Terraform! Today we'll try to apply it a bit more practically!
 
 #### PART 1:
 - Take the module below. We'll use `null_resource`, but pretend we're creating resource groups in Azure. 

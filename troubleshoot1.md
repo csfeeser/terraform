@@ -14,7 +14,7 @@
 
     `student@bchd:~/mycode/troubleshoot$` `wget https://raw.githubusercontent.com/csfeeser/terraform/main/scripts/main ~/mycode/troubleshoot/main -q`
 
-0. **Here's my recommendation.** Use `terraform init` and `terraform validate` (or try to anyway) and observe the errors. Rather than trying to fix every error you see right away, try to fix whatever issue is causing the error message each time you try to run Terraform.
+0. **Here's my recommendation.** Use `terraform init` and `terraform validate` (or try to anyway) and observe the errors. Rather than trying to fix every error you see right away, try to fix one issue at a time before you re-test.
 
 0. When the command `curl localhost:8089` returns HTML to an nginx welcome page, you know you've succeeded!
 

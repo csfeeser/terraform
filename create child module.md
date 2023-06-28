@@ -10,11 +10,11 @@ Clone a solution that contains a simple Terraform root and child module (we used
 
 Make a new child module directory in the folder you just downloaded.
 
-`student@bchd:~/mycode/day3-warmup$` `mkdir ~/mycode/day3-warmup/my_modules/thedudeabides`
+`student@bchd:~/mycode/day3-warmup$` `mkdir ~/mycode/day3-warmup/basic_terraform_module/my_modules/thedudeabides`
 
 ### OBJECTIVE:
 
-1. Create a `main.tf` file in `day3-warmup/my_modules/thedudeabides`. Create a null resource block!
+1. Create a `main.tf` file in `day3-warmup/basic_terraform_module/my_modules/thedudeabides`. Create a null resource block!
 
 ```hcl
 resource "null_resource" "lebowski" {

@@ -1,5 +1,9 @@
 # Warming up with Child Modules!
 
+<img src="https://i.imgflip.com/7qvcap.jpg" alt="drawing" width="300"/>
+
+
+
 Create a new directory and move into it:
 
 `student@bchd:~$` `mkdir -p ~/mycode/day3-warmup && cd ~/mycode/day3-warmup`

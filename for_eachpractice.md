@@ -98,7 +98,7 @@ locals {  rgs = {
                 }}
 
 resource "null_resource" "dummy_rgs" {
-  for_each = local.rgs
+  for_each = tomap(local.rgs)
   triggers = {
                name= each.key     // alpha, bravo, charlie
                region= each.value.region   // eastus, southindia, westus2
@@ -106,7 +106,7 @@ resource "null_resource" "dummy_rgs" {
 }
 
 resource "null_resource" "dummy_vnets" {
-  for_each = local.rgs
+  for_each = tomap(local.rgs)
   triggers = {
                name= each.value.vnet        // use value of "vnet" above
                region= each.value.region      // use value of "region" above

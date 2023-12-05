@@ -8,7 +8,7 @@ Create a new directory and move into it:
 
 `student@bchd:~$` `mkdir -p ~/mycode/day3-warmup && cd ~/mycode/day3-warmup`
 
-Clone a solution that contains a simple Terraform root and child module (we used this yesterday).
+Clone a solution that contains a simple Terraform root and child module.
 > **IMPORTANT-** you must include the "." at the end of this command!
 
 `student@bchd:~/mycode/day3-warmup$` `git clone https://github.com/rzfeeser/basic_terraform_module .`

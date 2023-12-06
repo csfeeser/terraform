@@ -1,0 +1,1932 @@
+---
+- Question: You have multiple team members collaborating on infrastructure as code
+    (IaC) using Terraform, and want to apply formatting standards for
+    readability. How can you format Terraform HCL (HashiCorp Configuration
+    Language) code according to standard Terraform style convention?
+  A: Run the terraform fmt command during the code linting phase of your CI/CD
+    process
+  B: Designate one person in each team to review and format everyone's code
+  C: Manually apply two spaces indentation and align equal sign "=" characters in
+    every Terraform file (*.tf)
+  D: Write a shell script to transform Terraform files using tools such as AWK,
+    Python, and sed
+  Answer: A
+  Explanation: https://developer.hashicorp.com/terraform/cli/commands/fmt The
+    terraform fmt command is used to rewrite Terraform configuration files to a
+    canonical format and style. This command applies a subset of the Terraform
+    language style conventions, along with other minor adjustments for
+    readability.
+- Question: The terraform.tfstate file always matches your currently built
+    infrastructure.
+  A: true
+  B: false
+  Answer: B
+  Explanation: It doesn't necessarily always matches the current infrastructure,
+    since one can manually change resources and therefore drift from the state
+    configuration. Terraform has no way to know or track changes made outside of
+    it.
+- Question: One remote backend configuration always maps to a single remote workspace.
+  A: true
+  B: false
+  Answer: B
+  Explanation: https://www.terraform.io/language/settings/backends/remote. The
+    remote backend can work with either a single remote Terraform Cloud
+    workspace, or with multiple similarly-named remote workspaces (like
+    networking-dev and networking-prod).
+- Question: How is the Terraform remote backend different than other state
+    backends such as S3, Consul, etc.?
+  A: It can execute Terraform runs on dedicated infrastructure on premises or in
+    Terraform Cloud
+  B: It doesn't show the output of a terraform apply locally
+  C: It is only available to paying customers
+  D: All of the above
+  Answer: A
+  Explanation: Backends define where Terraform's state snapshots are stored. A
+    given Terraform configuration can either specify a backend, integrate with
+    Terraform Cloud, or do neither and default to storing state locally. B and C
+    are incorrect.
+- Question: What is the workflow for deploying new infrastructure with Terraform?
+  A: terraform plan to import the current infrastructure to the state file, make
+    code changes, and terraform apply to update the infrastructure.
+  B: Write a Terraform configuration, run terraform show to view proposed changes,
+    and terraform apply to create new infrastructure.
+  C: terraform import to import the current infrastructure to the state file, make
+    code changes, and terraform apply to update the infrastructure.
+  D: Write a Terraform configuration, run terraform init, run terraform plan to
+    view planned infrastructure changes, and terraform apply to create new
+    infrastructure.
+  Answer: D
+- Question: |
+    A provider configuration block is required in every Terraform configuration.
+    Example:
+    provider "provider_name" {
+       ...
+    }
+  A: true
+  B: false
+  Answer: A?
+  Explanation: Answer is hotly debated. Documentation states that if no config
+    block is created TF will auto complete an answer. "A" is referenced from
+    https://github.com/hashicorp/terraform/issues/17928
+- Question: You run a local-exec provisioner in a null resource called
+    null_resource.run_script and realize that you need to rerun the script.
+    Which of the following commands would you use first?
+  A: terraform taint null_resource.run_script
+  B: terraform apply -target=null_resource.run_script
+  C: terraform validate null_resource.run_script
+  D: terraform plan -target=null_resource.run_script
+  Answer: A
+  Explanation: Even though taint is deprecated, this is an older test and that is
+    currently the correct answer (even though terraform apply -replace is
+    better)
+- Question: Which provisioner invokes a process on the resource created by Terraform?
+  A: remote-exec
+  B: null-exec
+  C: local-exec
+  D: file
+  Answer: A
+  Explanation: The local-exec provisioner invokes a local executable after a
+    resource is created. This invokes a process on the machine running
+    Terraform, not on the resource.
+    https://www.terraform.io/language/resources/provisioners/local-exec
+- Question: Which of the following is not true of Terraform providers?
+  A: Providers can be written by individuals.
+  B: Providers can be maintained by a community of users.
+  C: Some providers are maintained by HashiCorp.
+  D: Major cloud vendors and non-cloud vendors can write, maintain, or collaborate
+    on Terraform providers.
+  E: None of the above.
+  Answer: E
+  Explanation: >
+    All of the statements are true of Terraform providers.
+
+
+    A. Providers can be written by individuals - Any person or organization can develop and distribute a Terraform provider, allowing them to expand Terraform's capabilities to manage resources that it previously could not.
+
+
+    B. Providers can be maintained by a community of users - Many Terraform providers are open source projects, and the development and maintenance of these providers can be collaborative efforts between multiple individuals and organizations.
+
+
+    C. Some providers are maintained by HashiCorp - HashiCorp, the creators of Terraform, maintain a number of official providers that cover popular infrastructure providers such as AWS, Google Cloud, and Microsoft Azure.
+
+
+    D. Major cloud vendors and non-cloud vendors can write, maintain, or collaborate on Terraform providers - Providers can be developed and maintained by cloud vendors, non-cloud vendors, or a combination of both, to expand Terraform's capabilities and support for different types of infrastructure.
+- Question: What command does Terraform require the first time you run it within a
+    configuration directory?
+  A: terrafrom import
+  B: terraform init
+  C: terraform plan
+  D: terraform workspace
+  Answer: B
+  Explanation: init downloads the provider code necessary to run the module.
+- Question: You have deployed a new webapp with a public IP address on a cloud
+    provider. However, you did not create any outputs for your code. What is the
+    best method to quickly find the IP address of the resource you deployed?
+  A: Run terraform output ip_address to view the result
+  B: In a new folder, use the terraform_remote_state data source to load in the
+    state file, then write an output for each resource that you find the state
+    file
+  C: Run terraform state list to find the name of the resource, then terraform
+    state show to find the attributes including public IP address
+  D: Run terraform destroy then terraform apply and look for the IP address in
+    stdout
+  Answer: C
+  Explanation: The correct answer is C. Can't be A because no output was defined.
+    https://www.examtopics.com/discussions/hashicorp/view/74085-exam-terraform-associate-topic-1-question-10-discussion/
+- Question: Which of the following is not a key principle of infrastructure as code?
+  A: Versioned infrastructure
+  B: Golden images
+  C: Idempotence
+  D: Self-describing infrastructure
+  Answer: B
+  Explanation: >
+    "Golden images" refers to a specific method of deployment where a
+    pre-configured image of an operating system or application is stored and
+    used as a base for all new deployments. This method is not a key principle
+    of Infrastructure as Code, but it is a common method of deployment in
+    traditional IT environments.
+
+    Infrastructure as Code is based on the following key principles:
+
+    A. Versioned infrastructure - The infrastructure is treated as code and is version controlled, allowing for auditing, rollback, and collaboration.
+
+    C. Idempotence - The infrastructure is provisioned in a repeatable and predictable manner, making it possible to run the provisioning scripts multiple times without creating additional resources or causing changes to existing resources.
+
+    D. Self-describing infrastructure - The code used to provision the infrastructure is human-readable and self-documented, making it easier to understand and maintain over time.
+- Question: Terraform variables and outputs that set the "description" argument
+    will store that description in the state file.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Outputs are stored but descriptions are not...
+- Question: |
+    What is the provider for this fictitious resource?
+    resource "aws_vpc" "main" {
+       name = "test"
+    }
+  A: vpc
+  B: main
+  C: aws
+  D: test
+  Answer: C
+  Explanation: Pretty much all aws provider resources start with "aws"
+- Question: If you manually destroy infrastructure, what is the best practice
+    reflecting this change in Terraform?
+  A: Run terraform refresh
+  B: It will happen automatically
+  C: Manually update the state file
+  D: Run terraform import
+  Answer: A
+  Explanation: If you manually destroy infrastructure it will still be in the
+    state file so a refresh is necessary to update the file.
+- Question: What is not processed when running a terraform refresh?
+  A: State file
+  B: Configuration file
+  C: Credentials
+  D: Cloud provider
+  Answer: B
+  Explanation: The configuration file is not processed during terraform refresh.
+    The configuration file is only used during the terraform apply or terraform
+    plan commands to determine the desired state of the infrastructure
+- Question: What information does the public Terraform Module Registry
+    automatically expose about published modules?
+  A: Required input variables
+  B: Optional inputs variables and default values
+  C: Outputs
+  D: All of the above
+  E: None of the above
+  Answer: D
+  Explanation: Extract from documentation- The registry extracts information about
+    the module from the module's source. The module name, provider,
+    documentation, inputs/outputs, and dependencies are all parsed and available
+    via the UI or API, as well as the same information for any submodules or
+    examples in the module's source repository.
+- Question: If a module uses a local values, you can expose that value with a
+    terraform output.
+  A: true
+  B: false
+  Answer: A
+  Explanation: https://www.terraform.io/docs/language/values/locals.html and
+    https://www.terraform.io/docs/language/values/outputs.html
+- Question: You should store secret data in the same version control repository as
+    your Terraform configuration.
+  A: true
+  B: false
+  Answer: B
+  Explanation: This is because version control repositories are often publicly
+    accessible, and if sensitive information is stored in the repository it can
+    be easily accessed by unauthorized individuals. Additionally, version
+    control repositories typically have a history of all changes made to files,
+    so even if sensitive information is deleted at a later point, it can still
+    be retrieved from the repository history. To properly secure secret data, it
+    is recommended to store it in a secure and encrypted format, such as in a
+    secure vault or by using a tool specifically designed for storing secrets.
+- Question: Which of the following is not a valid string function in Terraform?
+  A: split
+  B: join
+  C: slice
+  D: chomp
+  Answer: C
+  Explanation: Slice is not listed in official docs for strings.
+- Question: You have provisioned some virtual machines (VMs) on Google Cloud
+    Platform (GCP) using the gcloud command line tool. However, you are
+    standardizing with Terraform and want to manage these VMs using Terraform
+    instead. What are the two things you must do to achieve this? (Choose two.)
+  A: Provision new VMs using Terraform with the same VM names
+  B: Use the terraform import command for the existing VMs
+  C: Write Terraform configuration for the existing VMs
+  D: Run the terraform import-gcp command
+  Answer: B,C
+  Explanation: For resources created outside terraform, you first write the
+    configuration and then import it inside terraform, so the answer is B and C.
+- Question: You have recently started a new job at a retailer as an engineer. As
+    part of this new role, you have been tasked with evaluating multiple outages
+    that occurred during peak shopping time during the holiday season. Your
+    investigation found that the team is manually deploying new compute
+    instances and configuring each compute instance manually. This has led to
+    inconsistent configuration between each compute instance. How would you
+    solve this using infrastructure as code?
+  A: Implement a ticketing workflow that makes engineers submit a ticket before
+    manually provisioning and configuring a resource
+  B: Implement a checklist that engineers can follow when configuring compute
+    instances
+  C: Replace the compute instance type with a larger version to reduce the number
+    of required deployments
+  D: Implement a provisioning pipeline that deploys infrastructure configurations
+    committed to your version control system following code reviews
+  Answer: D
+  Explanation: D is correct because this automates the deplyoment with a standard
+    configuration.
+- Question: terraform init initializes a sample main.tf file in the current directory.
+  A: true
+  B: false
+  Answer: B
+  Explanation: terraform init is used to download and install any necessary
+    plugins for the providers you are using. You will need to create a main.tf
+    file yourself.
+- Question: Which two steps are required to provision new infrastructure in the
+    Terraform workflow? (Choose two.)
+  A: Destroy
+  B: Apply
+  C: Import
+  D: Init
+  E: Validate
+  Answer: B, D
+  Explanation: >
+    B. Apply- The terraform apply command is used to provision new
+    infrastructure. This command takes the Terraform configuration files as
+    input and creates or updates the resources specified in the configuration
+    files. 
+
+    D. Init- The "terraform init" command is used to initialize a Terraform configuration directory. This command must be run before running the "terraform apply" command to ensure that the required Terraform modules and plugins are installed and available.
+- Question: Why would you use the terraform taint command?
+  A: When you want to force Terraform to destroy a resource on the next apply
+  B: When you want to force Terraform to destroy and recreate a resource on the
+    next apply
+  C: When you want Terraform to ignore a resource on the next apply
+  D: When you want Terraform to destroy all the infrastructure in your workspace
+  Answer: B
+  Explanation: The terraform taint command informs Terraform that a particular
+    object has become degraded or damaged. Terraform represents this by marking
+    the object as "tainted" in the Terraform state, and Terraform will propose
+    to replace it in the next plan you create.
+    https://www.terraform.io/cli/commands/taint
+- Question: Terraform requires the Go runtime as a prerequisite for installation.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Terraform software is written in Go but it is not required to have
+    Go installed as you get a binary after installing terraform.
+- Question: When should you use the force-unlock command?
+  A: You see a status message that you cannot acquire the lock
+  B: You have a high priority change
+  C: Automatic unlocking failed
+  D: You apply failed due to a state lock
+  Answer: C
+  Explanation: Force unlock should only be used to unlock your own lock in the
+    situation where automatic unlocking failed. To protect you, the force-unlock
+    command requires a unique lock ID. Terraform will output this lock ID if
+    unlocking fails.
+- Question: Terraform can import modules from a number of sources, which of the
+    following is not a valid source?
+  A: FTP server
+  B: GitHub repository
+  C: Local path
+  D: Terraform Module Registry
+  Answer: A
+  Explanation: https://www.terraform.io/language/modules/sources
+- Question: Which of the following is available only in Terraform Enterprise or
+    Cloud workspaces and not in Terraform CLI?
+  A: Secure variable storage
+  B: Support for multiple cloud providers
+  C: Dry runs with terraform plan
+  D: Using the workspace as a data source
+  Answer: A
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/74318-exam-terraform-associate-topic-1-question-28-discussion/
+- Question: terraform validate validates the syntax of Terraform files.
+  A: true
+  B: false
+  Answer: A
+  Explanation: Validate runs checks that verify whether a configuration is
+    syntactically valid and internally consistent, regardless of any provided
+    variables or existing state. It is thus primarily useful for general
+    verification of reusable modules, including correctness of attribute names
+    and value types.
+- Question: You have used Terraform to create an ephemeral development environment
+    in the cloud and are now ready to destroy all the infrastructure described
+    by your Terraform configuration. To be safe, you would like to first see all
+    the infrastructure that will be deleted by Terraform. Which command should
+    you use to show all of the resources that will be deleted? (Choose two.)
+  A: Run terraform plan -destroy.
+  B: This is not possible. You can only show resources that will be created.
+  C: Run terraform state rm *.
+  D: Run terraform destroy and it will first output all the resources that will be
+    deleted before prompting for approval.
+  Answer: A, D
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/79158-exam-terraform-associate-topic-1-question-134-discussion/
+- Question: Which of the following is the correct way to pass the value in the
+    variable "num_servers" into a module with the input servers?
+  A: servers = num_servers
+  B: servers = variable.num_servers
+  C: servers = var(num_servers)
+  D: servers = var.num_servers
+  Answer: D
+  Explanation: A is not correct because TF needs to be told num_servers is a
+    variable. B is incorrect because the full word does not need to be used. C
+    is incorrect because parens are not used.
+- Question: A Terraform provisioner must be nested inside a resource configuration block.
+  A: true
+  B: false
+  Answer: A
+  Explanation: Most provisioners require access to the remote resource via SSH or
+    WinRM, and expect a nested connection block with details about how to
+    connect.
+- Question: Terraform can run on Windows or Linux, but it requires a Server
+    version of the Windows operating system.
+  A: true
+  B: false
+  Answer: B
+  Explanation: https://www.terraform.io/downloads proves it.
+- Question: Where does the Terraform local backend store its state?
+  A: In the /tmp directory
+  B: In the terraform.tfvars file
+  C: In the terraform.tfstate file
+  D: In the user's .terraformrc file
+  Answer: C
+  Explanation: The local backend stores state on the local filesystem, locks that
+    state using system APIs, and performs operations locally.
+    https://www.terraform.io/docs/language/settings/backends/local.html
+- Question: What value does the Terraform Cloud/Terraform Enterprise private
+    module registry provide over the public Terraform Module Registry?
+  A: The ability to share modules with public Terraform users and members of
+    Terraform Enterprise Organizations
+  B: The ability to tag modules by version or release
+  C: The ability to restrict modules to members of Terraform Cloud or Enterprise
+    organizations
+  D: The ability to share modules publicly with any user of Terraform
+  Answer: C
+  Explanation: https://developer.hashicorp.com/terraform/cloud-docs/registry.
+    Terraform Cloud's private registry works similarly to the public Terraform
+    Registry and helps you share Terraform providers and Terraform modules
+    across your organization. It includes support for versioning and a
+    searchable list of available providers and modules.
+- Question: Which task does terraform init not perform?
+  A: Sources all providers present in the configuration and ensures they are
+    downloaded and available locally
+  B: Connects to the backend
+  C: Sources any modules and copies the configuration locally
+  D: Validates all required variables are present
+  Answer: D
+  Explanation: https://www.terraform.io/docs/cli/commands/init.html
+- Question: You have declared a variable called var.list which is a list of
+    objects that all have an attribute id. Which options will produce a list of
+    the IDs? (Choose two.)
+  A:
+    for o in var.list: o => o.id
+  B: var.list[*].id
+  C: "[ var.list[*].id ]"
+  D:
+    - for o in var.list: o.id
+  Answer: B, D
+  Explanation: B is a splat expression,
+    https://www.terraform.io/language/expressions/splat.  D is using for,
+    https://www.terraform.io/language/expressions/for.
+- Question: >
+    Which argument(s) is (are) required when declaring a Terraform
+    variable?
+
+    default - A default value which then makes the variable optional.
+
+    type - This argument specifies what value types are accepted for the variable.
+
+    description - This specifies the input variable's documentation.
+
+    validation - A block to define validation rules, usually in addition to type constraints.
+
+    sensitive - Limits Terraform UI output when the variable is used in configuration.
+
+    nullable - Specify if the variable can be null within the module.
+  A: type
+  B: default
+  C: description
+  D: All of the above
+  E: None of the above
+  Answer: E
+  Explanation: Documentation describes all of these as optional. You can create a
+    variable block with NO arguments.
+- Question: >
+    When using a module block to reference a module stored on the public
+    Terraform Module Registry such as:
+
+    module "consul" {
+       source = "hashicorp/consul/aws"
+    }
+
+    How do you specify version 1.0.0?
+  A: Modules stored on the public Terraform Module Registry do not support
+    versioning
+  B: Append ?ref=v1.0.0 argument to the source path
+  C: Add version = "1.0.0" attribute to module block
+  D: Nothing, modules stored on the public Terraform Module Registry always
+    default to version 1.0.0
+  Answer: C
+  Explanation: https://www.terraform.io/language/modules/syntax#version
+- Question: What features does the hosted service Terraform Cloud provide? (Choose two.)
+  A: Automated infrastructure deployment visualization
+  B: Automatic backups
+  C: Remote state storage
+  D: A web-based user interface (UI)
+  Answer: C, D
+  Explanation: C and D are correct answers, there are no auto backups in Terraform
+    cloud.
+    https://www.terraform.io/enterprise/admin/infrastructure/backup-restore
+- Question: Which option can not be used to keep secrets out of Terraform
+    configuration files?
+  A: A Terraform provider
+  B: Environment variables
+  C: A -var flag
+  D: secure string
+  Answer: D
+  Explanation: We can use providers to supply variable values (vault for example).
+    We can provide input variable value in parameter for apply command. We can
+    use environment variables. HashiCorp does not mention anything about secure
+    strings.
+- Question: What is one disadvantage of using dynamic blocks in Terraform?
+  A: They cannot be used to loop through a list of values
+  B: Dynamic blocks can construct repeatable nested blocks
+  C: They make configuration harder to read and understand
+  D: Terraform will run more slowly
+  Answer: C
+  Explanation: Dynamic blocks allow you to define infrastructure resources using
+    variables, which can make it harder to see exactly what resources are being
+    created.
+- Question: Only the user that generated a plan may apply it.
+  A: true
+  B: false
+  Answer: B
+  Explanation: B is correct, a plan can be stored as a file and another person can
+    execute the plan file
+- Question: >
+    Examine the following Terraform configuration, which uses the data
+    source for an AWS AMI.
+
+    What value should you enter for the ami argument in the AWS instance resource?
+
+    data "aws_ami" "ubuntu" {
+       ...
+    }
+
+    resource "aws_instance" "web" {
+       ami = _________
+       instance_type = "t2.micro"
+       
+       tags = {
+         Name = "HelloWorld"
+       }
+    }
+  A: aws_ami.ubuntu
+  B: data.aws_ami.ubuntu
+  C: data.aws_ami.ubuntu.id
+  D: aws_ami.ubuntu.id
+  Answer: C
+  Explanation: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
+- Question: FILL IN THE BLANK - You need to specify a dependency manually. What
+    resource meta-parameter can you use to make sure Terraform respects the
+    dependency? Type your answer in the field provided. The text field is not
+    case-sensitive and all variations of the correct answer are accepted.
+  Answer: depends_on
+  Explanation: Explicit dependencies are set with "depends_on"
+- Question: You have never used Terraform before and would like to test it out
+    using a shared team account for a cloud provider. The shared team account
+    already contains 15 virtual machines (VM). You develop a Terraform
+    configuration containing one VM, perform terraform apply, and see that your
+    VM was created successfully. What should you do to delete the newly-created
+    VM with Terraform?
+  A: The Terraform state file contains all 16 VMs in the team account. Execute
+    terraform destroy and select the newly-created VM.
+  B: The Terraform state file only contains the one new VM. Execute terraform
+    destroy.
+  C: Delete the Terraform state file and execute Terraform apply.
+  D: Delete the VM using the cloud provider console and terraform apply to apply
+    the changes to the Terraform state file.
+  Answer: B
+  Explanation: Only resources mentioned in terraform will be applied and reflected
+    in state. Resources manually created in console and/or not defined in code
+    will not be captured by Terraform
+- Question: |+
+    What is the name assigned by Terraform to reference this resource?
+    resource "azurerm_resource_group" "dev" {
+       name = "test"
+       location = "westus"}
+       
+  A: dev
+  B: azurerm_resource_group
+  C: azurerm
+  D: test
+  Answer: A
+  Explanation: A resource block declares a resource of a given type
+    ("aws_instance") with a given local name ("dev")
+- Question: Setting the TF_LOG environment variable to DEBUG causes debug messages
+    to be logged into syslog.
+  A: true
+  B: false
+  Answer: B
+  Explanation: https://www.terraform.io/docs/internals/debugging.html
+- Question: Where in your Terraform configuration do you specify a state backend?
+  A: The terraform block
+  B: The resource block
+  C: The provider block
+  D: The datasource block
+  Answer: A
+  Explanation: https://www.terraform.io/language/settings/backends/configuration#using-a-backend-block
+- Question: In Terraform 0.13 and above, outside of the required_providers block,
+    Terraform configurations always refer to providers by their local names.
+  A: true
+  B: false
+  Answer: A
+  Explanation: Outside of the required_providers block, Terraform configurations
+    always refer to providers by their local names.
+    https://www.terraform.io/docs/language/providers/requirements.html
+- Question: What command should you run to display all workspaces for the current
+    configuration?
+  A: terraform workspace
+  B: terraform workspace show
+  C: terraform workspace list
+  D: terraform show workspace
+  Answer: C
+  Explanation: https://developer.hashicorp.com/terraform/cli/commands/workspace/list
+- Question: Terraform providers are always installed from the Internet.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Terraform configurations must declare which providers they require,
+    so that Terraform can install and use them.
+    https://www.terraform.io/docs/language/providers/configuration.html
+- Question: Which of these is the best practice to protect sensitive values in
+    state files?
+  A: Blockchain
+  B: Secure Sockets Layer (SSL)
+  C: Enhanced remote backends
+  D: Signed Terraform providers
+  Answer: C
+  Explanation: A remote backend allows you to store your Terraform state in a
+    central location, such as an S3 bucket or a HashiCorp Consul server. This
+    allows you to share state files between team members and across multiple
+    environments, such as staging and production.
+- Question: When does terraform apply reflect changes in the cloud environment?
+  A: Immediately
+  B: However long it takes the resource provider to fulfill the request
+  C: After updating the state file
+  D: Based on the value provided to the -refresh command line argument
+  E: None of the above
+  Answer: B
+  Explanation: If you are creating a new virtual machine using Terraform, it may
+    take a few minutes for the virtual machine to be created and for it to
+    become available for use. During this time, Terraform will continue to
+    report on the progress of the creation process and will display any errors
+    or issues that may arise. Once the virtual machine has been successfully
+    created, the changes will be reflected in your cloud environment.
+- Question: >
+    How would you reference the "name" value of the second instance of
+    this fictitious resource?
+
+    resource "aws_instance" "web" {
+       count = 2
+       name = "terraform-${count.index}"
+    }
+  A: element(aws_instance.web, 2)
+  B: aws_instance.web[1].name
+  C: aws_instance.web[1]
+  D: aws_instance.web[2].name
+  E: aws_instance.web.*.name
+  Answer: B
+  Explanation: https://www.terraform.io/docs/configuration-0-11/interpolation.html
+- Question: Terraform provisioners can be added to any resource block.
+  A: true
+  B: false
+  Answer: A
+  Explanation: https://www.terraform.io/language/resources/provisioners/syntax
+- Question: What is terraform refresh intended to detect?
+  A: Terraform configuration code changes
+  B: Empty state files
+  C: State file drift
+  D: Corrupt state files
+  Answer: C
+  Explanation: The terraform refresh command reads the current settings from all
+    managed remote objects and updates the Terraform state to match.
+- Question: FILL IN THE BLANK - Which flag would you add to terraform plan to save
+    the execution plan to a file? Type your answer in the field provided. The
+    text field is not case-sensitive and all variations of the correct answer
+    are accepted.
+  Answer: -out=FILENAME
+  Explanation: You can use the optional -out=FILE option to save the generated
+    plan to a file on disk, which you can later execute by passing the file to
+    terraform apply as an extra argument.
+- Question: FILL IN THE BLANK - What is the name of the default file where
+    Terraform stores the state? Type your answer in the field provided. The text
+    field is not case-sensitive and all variations of the correct answer are
+    accepted.
+  Answer: Terraform.tfstate
+  Explanation: This state is stored by default in a local file named
+    "terraform.tfstate", but it can also be stored remotely, which works better
+    in a team environment. https://www.terraform.io/language/state
+- Question: A Terraform local value can reference other Terraform local values.
+  A: true
+  B: false
+  Answer: A
+  Explanation: The expressions in local values are not limited to literal
+    constants; they can also reference other values in the module in order to
+    transform or combine them, including variables, resource attributes, or
+    other local values
+    https://www.terraform.io/language/values/locals#declaring-a-local-value
+- Question: Which of the following is not a valid Terraform collection type?
+  A: list
+  B: map
+  C: tree
+  D: set
+  Answer: C
+  Explanation: https://www.terraform.io/language/expressions/type-constraints#collection-types
+- Question: When running the command terraform taint against a managed resource
+    you want to force recreation upon, Terraform will immediately destroy and
+    recreate the resource.
+  A: true
+  B: false
+  Answer: B
+  Explanation: It will only occur after running terraform apply.
+    https://www.terraform.io/cli/commands/taint
+- Question: All standard backend types support state storage, locking, and remote
+    operations like plan, apply and destroy.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Some backends act like plain "remote disks" for state files; others
+    support locking the state while operations are being performed, which helps
+    prevent conflicts and inconsistencies.
+- Question: How can terraform plan aid in the development process?
+  A: Validates your expectations against the execution plan without permanently
+    modifying state
+  B: Initializes your working directory containing your Terraform configuration
+    files
+  C: Formats your Terraform configuration files
+  D: Reconciles Terraform's state against deployed resources and permanently
+    modifies state using the current status of deployed resources
+  Answer: A
+  Explanation: Terraform's plan command is used to create an execution plan that
+    outlines the steps that Terraform will take to reach your desired
+    infrastructure state. It allows you to preview and validate the changes that
+    will be made to your infrastructure before actually making those changes.
+    This can be helpful in the development process because it allows you to see
+    exactly what will be changed and ensure that it aligns with your
+    expectations before you apply those changes.
+- Question: You would like to reuse the same Terraform configuration for your
+    development and production environments with a different state file for
+    each. Which command would you use?
+  A: terraform import
+  B: terraform workspace
+  C: terraform state
+  D: terraform init
+  Answer: B
+  Explanation: https://developer.hashicorp.com/terraform/language/state/workspaces#when-to-use-multiple-workspaces
+- Question: |
+    What is the name assigned by Terraform to reference this resource?
+    resource "google_compute_instance" "main" {
+       name = "test"
+    }
+  A: compute_instance
+  B: main
+  C: google
+  D: teat
+  Answer: B
+  Explanation: google_compute_instance is the type of resource, "main" is the name
+    of this specific one.
+- Question: You're building a CI/CD (continuous integration/ continuous delivery)
+    pipeline and need to inject sensitive variables into your Terraform run. How
+    can you do this safely?
+  A: Pass variables to Terraform with a var flag
+  B: Copy the sensitive variables into your Terraform code
+  C: Store the sensitive variables in a secure_vars.tf file
+  D: Store the sensitive variables as plain text in a source code repository
+  Answer: A
+  Explanation: https://blog.gruntwork.io/a-comprehensive-guide-to-managing-secrets-in-your-terraform-code-1d586955ace1
+- Question: Your security team scanned some Terraform workspaces and found secrets
+    stored in a plaintext in state files. How can you protect sensitive data
+    stored in Terraform state files?
+  A: Delete the state file every time you run Terraform
+  B: Store the state in an encrypted backend
+  C: Edit your state file to scrub out the sensitive data
+  D: Always store your secrets in a secrets.tfvars file
+  Answer: B
+  Explanation: https://www.terraform.io/docs/language/state/sensitive-data.html
+- Question: In contrast to Terraform Open Source, when working with Terraform
+    Enterprise and Cloud Workspaces, conceptually you could think about them as
+    completely separate working directories.
+  A: true
+  B: false
+  Answer: A
+  Explanation: From the doc "Terraform Cloud manages infrastructure collections
+    with workspaces instead of directories. A workspace contains everything
+    Terraform needs to manage a given collection of infrastructure, and separate
+    workspaces function like completely separate working directories."
+    https://www.terraform.io/cloud-docs/workspaces
+- Question: You want to know from which paths Terraform is loading providers
+    referenced in your Terraform configuration (*.tf files). You need to enable
+    debug messages to find this out. Which of the following would achieve this?
+  A: Set the environment variable TF_LOG=TRACE
+  B: Set verbose logging for each provider in your Terraform configuration
+  C: Set the environment variable TF_VAR_log=TRACE
+  D: Set the environment variable TF_LOG_PATH
+  Answer: A
+  Explanation: To enable debug messages in Terraform, you can set the environment
+    variable TF_LOG to the value TRACE. This will cause Terraform to print
+    detailed debug information, including the paths from which it is loading
+    providers.
+- Question: How is terraform import run?
+  A: As a part of terraform init
+  B: As a part of terraform plan
+  C: As a part of terraform refresh
+  D: By an explicit call
+  E: All of the above
+  Answer: D
+  Explanation: https://www.terraform.io/cli/import/usage
+- Question: You have a simple Terraform configuration containing one virtual
+    machine (VM) in a cloud provider. You run terraform apply and the VM is
+    created successfully. What will happen if you delete the VM using the cloud
+    provider console, and run terraform apply again without changing any
+    Terraform code?
+  A: Terraform will remove the VM from state file
+  B: Terraform will report an error
+  C: Terraform will not make any changes
+  D: Terraform will recreate the VM
+  Answer: D
+  Explanation: A refresh will be made before apply, therefore terraform will
+    detect the VM is missing, and will update state accordingly. Then, it will
+    create a new one to match configuration
+- Question: Which of these options is the most secure place to store secrets foe
+    connecting to a Terraform remote backend?
+  A: Defined in Environment variables
+  B: Inside the backend block within the Terraform configuration
+  C: Defined in a connection configuration outside of Terraform
+  D: None of above
+  Answer: A    https://www.terraform.io/language/settings/backends/configuration#credentials-and-sensitive-data
+  Explanation: Warning, We recommend using environment variables to supply
+    credentials and other sensitive data. If you use -backend-config or hardcode
+    these values directly in your configuration, Terraform will include these
+    values in both the .terraform subdirectory and in plan files. This can leak
+    sensitive credentials.
+- Question: Your DevOps team is currently using the local backend for your
+    Terraform configuration. You would like to move to a remote backend to begin
+    storing the state file in a central location. Which of the following
+    backends would not work?
+  A: Amazon S3
+  B: Artifactory
+  C: Git
+  D: Terraform Cloud
+  Answer: C
+  Explanation: Git is not supported
+- Question: Which backend does the Terraform CLI use by default?
+  A: Terraform Cloud
+  B: Consul
+  C: Remote
+  D: Local
+  Answer: D
+  Explanation: The default backend used by the Terraform CLI is the local backend.
+    This means that the state file is stored on the local file system in a file
+    named "terraform.tfstate".
+- Question: When you initialize Terraform, where does it cache modules from the
+    public Terraform Module Registry?
+  A: On disk in the /tmp directory
+  B: In memory
+  C: On disk in the .terraform sub-directory
+  D: They are not cached
+  Answer: C
+  Explanation: null
+- Question: You write a new Terraform configuration and immediately run terraform
+    apply in the CLI using the local backend. Why will the apply fail?
+  A: Terraform needs you to format your code according to best practices first
+  B: Terraform needs to install the necessary plugins first
+  C: The Terraform CLI needs you to log into Terraform cloud first
+  D: Terraform requires you to manually run terraform plan first
+  Answer: B
+  Explanation: Need to run Terraform Init first to install the plugins
+- Question: What features stops multiple admins from changing the Terraform state
+    at the same time?
+  A: Version control
+  B: Backend types
+  C: Provider constraints
+  D: State locking
+  Answer: D
+  Explanation: Most version control systems don't provide locking that would
+    prevent two team members from running terraform apply on the same state file
+    at the same time.
+- Question: A fellow developer on your team is asking for some help in refactoring
+    their Terraform code. As part of their application's architecture, they are
+    going to tear down an existing deployment managed by Terraform and deploy
+    new. However, there is a server resource named aws_instance.ubuntu[1] they
+    would like to keep to perform some additional analysis. What command should
+    be used to tell Terraform to no longer manage the resource?
+  A: terraform apply rm aws_instance.ubuntu[1]
+  B: terraform state rm aws_instance.ubuntu[1]
+  C: terraform plan rm aws_instance.ubuntu[1]
+  D: terraform delete aws_instance.ubuntu[1]
+  Answer: B
+  Explanation: You can use terraform state rm in the less common situation where
+    you wish to remove a binding to an existing remote object without first
+    destroying it, which will effectively make Terraform forget the object while
+    it continues to exist in the remote system.
+- Question: Terraform can only manage resource dependencies if you set them
+    explicitly with the depends_on argument.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Most of the time, Terraform infers dependencies between resources
+    based on the configuration given, so that resources are created and
+    destroyed in the correct order. Occasionally, however, Terraform cannot
+    infer dependencies between different parts of your infrastructure, and you
+    will need to create an explicit dependency with the depends_on argument.
+- Question: A terraform apply can not _________ infrastructure.
+  A: change
+  B: destroy
+  C: provision
+  D: import
+  Answer: D
+  Explanation: Import is done via an explicit call.
+- Question: You need to constrain the GitHub provider to version 2.1 or greater.
+    Which of the following should you put into the Terraform 0.12
+    configuration's provider block?
+  A: version >= 2.1
+  B: version ~> 2.1
+  C: version = "<= 2.1"
+  D: version = ">= 2.1"
+  Answer: D
+  Explanation: Must be a string, requires quotes.
+- Question: You just scaled your VM infrastructure and realized you set the count
+    variable to the wrong value. You correct the value and save your change.
+    What do you do next to make your infrastructure match your configuration?
+  A: Run an apply and confirm the planned changes
+  B: Inspect your Terraform state because you want to change it
+  C: Reinitialize because your configuration has changed
+  D: Inspect all Terraform outputs to make sure they are correct
+  Answer: A
+  Explanation: You need your deployment to match your config, so only way to
+    implement changes is through terraform apply.
+- Question: Terraform provisioners that require authentication can use the ______ block.
+  A: connection
+  B: credentials
+  C: secrets
+  D: ssh
+  Answer: A
+  Explanation: Most provisioners require access to the remote resource via SSH or
+    WinRM and expect a nested connection block with details about how to
+    connect.
+- Question: Terraform validate reports syntax check errors from which of the
+    following scenarios?
+  A: Code contains tabs indentation instead of spaces
+  B: There is missing value for a variable
+  C: The state files does not match the current infrastructure
+  D: None of the above
+  Answer: D
+  Explanation: Validate runs checks that verify whether a configuration is
+    syntactically valid and internally consistent, regardless of any provide
+    variables or existing state (B and C discarded). ...referring only to the
+    configuration and not accessing any remote service such as remote state...
+    For A, you must use "fmt". Validate, validates the type of variables,
+    missing brackets, etc...
+- Question: Which of the following is allowed as a Terraform variable name?
+  A: count
+  B: name
+  C: source
+  D: version
+  Answer: B
+  Explanation: "The name of a variable can be any valid identifier except the
+    following: source, version, providers, count, for_each, lifecycle,
+    depends_on, locals."
+- Question: What type of block is used to construct a collection of nested
+    configuration blocks?
+  A: for_each
+  B: repeated
+  C: nesting
+  D: dynamic
+  Answer: D
+  Explanation: The dynamic nested block provides a way to build repeated nested
+    configuration blocks.
+- Question: Module variable assignments are inherited from the parent module and
+    do not need to be explicitly set.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Modules do not inherit variables from the parent module. All
+    modules are self-contained units. So you have to explicitly define variables
+    in the child module, and then explicit set these variables in the parent
+    module, when you instantiate the child module.
+- Question: If writing Terraform code that adheres to the Terraform style
+    conventions, how would you properly indent each nesting level compared to
+    the one above it?
+  A: With four spaces
+  B: With a tab
+  C: With three spaces
+  D: With two spaces
+  Answer: D
+  Explanation: https://www.terraform.io/language/syntax/style#style-conventions
+- Question: Which of the following is not an action performed by terraform init?
+  A: Create a sample main.tf file
+  B: Initialize a configured backend
+  C: Retrieve the source code for all referenced modules
+  D: Load required provider plugins
+  Answer: A
+  Explanation: init doesn't create an main.tf file.
+- Question: HashiCorp Configuration Language (HCL) supports user-defined functions.
+  A: true
+  B: false
+  Answer: B
+  Explanation: The HCL language does not support user-defined functions, and so
+    only the functions built in to the language are available for use.
+- Question: How can you trigger a run in a Terraform Cloud workspace that is
+    connected to a Version Control System (VCS) repository?
+  A: Only Terraform Cloud organization owners can set workspace variables on VCS
+    connected workspaces
+  B: Commit a change to the VCS working directory and branch that the Terraform
+    Cloud workspace is connected to
+  C: Only members of a VCS organization can open a pull request against
+    repositories that are connected to Terraform Cloud workspaces
+  D: Only Terraform Cloud organization owners can approve plans in VCS connected
+    workspaces
+  Answer: B
+  Explanation: "In a workspace linked to a VCS repository, runs start
+    automatically when you merge or commit changes to version control. A
+    workspace is linked to one branch of a VCS repository and ignores changes to
+    other branches. You can specify which files and directories within your
+    repository trigger runs. "
+- Question: Terraform and Terraform providers must use the same major version
+    number in a single configuration.
+  A: true
+  B: false
+  Answer: B
+  Explanation: terraform version and providers version can be different.
+- Question: Which statement describes a goal of infrastructure as code?
+  A: An abstraction from vendor specific APIs
+  B: Write once, run anywhere
+  C: A pipeline process to test and deliver software
+  D: The programmatic configuration of resources
+  Answer: D
+  Explanation: A, IaC is not for "specific APIs". B (WORE) an example is JVM or
+    container, no matter where you run your code because there is an abstraction
+    layer like docker, java virtual machine, etc.. where the code run fine. For
+    Terraform you need to write a specific terraform configuration file based on
+    which cloud you will deploy the infra (we can not deploy a tf file write for
+    AWS in Azure changing only the provider, right?. C, IaC is a part of the
+    pipeline but not the entire pipeline. The correct answer is D, "The
+    programmatic configuration of resources" in a human-readable code.
+- Question: When using Terraform to deploy resources into Azure, which scenarios
+    are true regarding state files? (Choose two.)
+  A: When a change is made to the resources via the Azure Cloud Console, the
+    changes are recorded in a new state file
+  B: When a change is made to the resources via the Azure Cloud Console, Terraform
+    will update the state file to reflect them during the next plan or apply
+  C: When a change is made to the resources via the Azure Cloud Console, the
+    current state file will not be updated
+  D: When a change is made to the resources via the Azure Cloud Console, the
+    changes are recorded in the current state file
+  Answer: B, C
+  Explanation: B and C are both correct. Terraform plan DOES refresh the state
+    file. extract from documentation . You don't need the (deprecated) refresh
+    command to update state file.
+- Question: >
+    You need to deploy resources into two different cloud regions in the
+    same Terraform configuration. To do that, you declare multiple provider
+    configurations as follows:
+
+    provider "aws" {
+       region = "us-east-1"
+    }
+
+    provider "aws" {
+       alias = "west"
+       region = "us-west-2"
+    }
+
+    What meta-argument do you need to configure in a resource block to deploy the resource to the `us-west-2` AWS region?
+  A: alias = west
+  B: provider = west
+  C: provider = aws.west
+  D: alias = aws.west
+  Answer: C
+  Explanation: alias is not a meta-argument
+- Question: You have declared an input variable called environment in your parent
+    module. What must you do to pass the value to a child module in the
+    configuration?
+  A: Add node_count = var.node_count
+  B: Declare the variable in a terraform.tfvars file
+  C: Declare a node_count input variable for child module
+  D: Nothing, child modules inherit variables of parent module
+  Answer: C
+  Explanation: C is correct as the question is about passing a variable. So if you
+    want the parent to pass its output to its child you need to configure an
+    input variable for that.
+- Question: If a module declares a variable with a default, that variable must
+    also be defined within the module.
+  A: true
+  B: false
+  Answer: B
+  Explanation: A module can declare a variable with a default value without
+    defining it within the module. This is because the variable can be used
+    as-is with the default value, or it can be assigned a new value by code that
+    imports the module.
+- Question: Which option cannot be used to keep secrets out of Terraform
+    configuration files?
+  A: Environment Variables
+  B: secure string
+  C: A Terraform provider
+  D: A -var flag
+  Answer: C
+  Explanation: We can use providers to supply variable values (vault for example).
+    We can provide input variable value in parameter for apply command. We can
+    use environment variables. HashiCorp is not mentioning anything about secure
+    strings.
+- Question: Which of the following arguments are required when declaring a
+    Terraform output?
+  A: sensitive
+  B: description
+  C: default
+  D: value
+  Answer: D
+  Explanation: The type argument in a variable block allows you to restrict the
+    type of value that will be accepted as the value for a variable. If no type
+    constraint is set then a value of any type is accepted.
+- Question: Your risk management organization requires that new AWS S3 buckets
+    must be private and encrypted at rest. How can Terraform Enterprise
+    automatically and proactively enforce this security control?
+  A: With a Sentinel policy, which runs before every apply
+  B: By adding variables to each TFE workspace to ensure these settings are always
+    enabled
+  C: With an S3 module with proper settings for buckets
+  D: Auditing cloud storage buckets with a vulnerability scanning tool
+  Answer: A
+  Explanation: Terraform Enterprise provides the ability to enforce security
+    controls through Sentinel policies, which are a form of policy as code.
+    Sentinel policies allow you to define and enforce organizational or
+    regulatory policies by creating a set of rules that run before each
+    Terraform operation.
+- Question: Most Terraform providers interact with ____________.
+  A: API
+  B: VCS Systems
+  C: Shell scripts
+  D: None of the above
+  Answer: A
+  Explanation: Terraform relies on plugins called providers to interact with cloud
+    providers, SaaS providers, and other APIs, as per
+    https://www.terraform.io/language/providers
+- Question: terraform validate validates that your infrastructure matches the
+    Terraform state file.
+  A: true
+  B: false
+  Answer: B
+  Explanation: B because Terraform validate only checks for syntax errors
+- Question: What does terraform import allow you to do?
+  A: Import a new Terraform module
+  B: Use a state file to import infrastructure to the cloud
+  C: Import provisioned infrastructure to your state file
+  D: Import an existing state file to a new Terraform workspace
+  Answer: C
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/79122-exam-terraform-associate-topic-1-question-107-discussion/
+- Question: >
+    FILL IN THE BLANK - In the below configuration, how would you
+    reference the module output vpc_id?
+
+    module "vpc" {
+      source = "terrafrom-and-module/vpc/aws"
+      cidr = "10.0.0.0/16"
+      name = "test-vpc"
+    }
+  Answer: module.vpc.vpc_id
+  Explanation: Module is the prefix used to reference outputs from a module, vpc
+    is the name of the module, and vpc_id is the name of the output being
+    referenced.
+- Question: >
+    How would you reference the Volume IDs associated with the
+    ebs_block_device blocks in this configuration?
+
+    resource "aws_instance" "example" {
+      ami = "ami-abc123"
+      instance_type = "t2.micro"
+    ebs_block_device{
+      device_name = "sda2"
+      volume_size = 16
+    }
+
+    ebs_block_device {
+      device_name = "sda3"
+      volume_size = 20
+      }
+    }
+  A: aws_instance.example.ebs_block_device.[*].volume_id
+  B: aws_instance.example.ebs_block_device.volume_id
+  C: aws_instance.example.ebs_block_device[sda2,sda3].volume_id
+  D: aws_instance.example.ebs_block_device.*.volume_id
+  Answer: D
+  Explanation: A's brackets are not allowed
+- Question: What does state locking accomplish?
+  A: Copies the state file from memory to disk
+  B: Encrypts any credentials stored within the state file
+  C: Blocks Terraform commands from modifying the state file
+  D: Prevents accidental deletion of the state file
+  Answer: C
+  Explanation: state locking protects state files from modification at the same time
+- Question: You just upgraded the version of a provider in an existing Terraform
+    project. What do you need to do to install the new provider?
+  A: Run terraform apply -upgrade
+  B: Run terraform init -upgrade
+  C: Run terraform refresh
+  D: Upgrade your version of Terraform
+  Answer: B
+  Explanation: "[-upgrade] - Opt to upgrade modules and plugins as part of their
+    respective installation steps.
+    https://www.terraform.io/cli/commands/init#upgrade"
+- Question: A module can always refer to all variables declared in its parent module.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Modules do not inherit variables from the parent module. All
+    modules are self-contained units. So you have to explicitly define variables
+    in the child module, and then explicit set these variables in the parent
+    module, when you instantiate the child module.
+- Question: When you use a remote backend that needs authentication, HashiCorp
+    recommends that you...
+  A: Use partial configuration to load the authentication credentials outside of
+    the Terraform code
+  B: Push your Terraform configuration to an encrypted git repository
+  C: Write the authentication credentials in the Terraform configuration files
+  D: Keep the Terraform configuration files in a secret store
+  Answer: A
+  Explanation: null
+- Question: You have a simple Terraform configuration containing one virtual
+    machine (VM) in a cloud provider. You run terraform apply and the VM is
+    created successfully. What will happen if you terraform apply again
+    immediately afterwards without changing any Terraform code?
+  A: Terraform will terminate and recreate the VM
+  B: Terraform will create another duplicate VM
+  C: Terraform will apply the VM to the state file
+  D: Nothing
+  Answer: D
+  Explanation: Docs Warning- We recommend using environment variables to supply
+    credentials and other sensitive data. If you use -backend-config or hardcode
+    these values directly in your configuration, Terraform will include these
+    values in both the .terraform subdirectory and in plan files. This can leak
+    sensitive credentials.
+- Question: A junior admin accidentally deleted some of your cloud instances. What
+    does Terraform do when you run terraform apply?
+  A: Build a completely brand new set of infrastructure
+  B: Tear down the entire workspace infrastructure and rebuild it
+  C: Rebuild only the instances that were deleted
+  D: Stop and generate an error message about the missing instances
+  Answer: C
+  Explanation: Terraform would refresh and check that the Current State in the
+    state file is not thesame as the Desired State. Terraform will check its
+    configuration resource files and if it finds a resource that is present in
+    the state file but not in the Desired state, it will create it
+- Question: You have created a main.tr Terraform configuration consisting of an
+    application server, a database, and a load balancer. You ran terraform apply
+    and all resources were created successfully. Now you realize that you do not
+    actually need the load balancer so you run terraform destroy without any
+    flags. What will happen?
+  A: Terraform will destroy the application server because it is listed first in
+    the code
+  B: Terraform will prompt you to confirm that you want to destroy all the
+    infrastructure
+  C: Terraform will destroy the main.tf file
+  D: Terraform will prompt you to pick which resource you want to destroy
+  E: Terraform will immediately destroy all the infrastructure
+  Answer: B
+  Explanation: Terraform will prompt you to confirm that you want to destroy all
+    the resources before proceeding. The prompt will ask you to enter "yes" or
+    "no" to confirm or cancel the destruction of resources unless you add the
+    "-auto-approve" flag to stop terraform from prompting you to confirm.
+- Question: Which type of block fetches or computes information for use elsewhere
+    in a Terraform configuration?
+  A: provider
+  B: resource
+  C: local
+  D: data
+  Answer: D
+  Explanation: it's D as you're using infrastructure already created - that's when
+    you use "data". With "resource" you create new infrastructure.
+- Question: You have just developed a new Terraform configuration for two virtual
+    machines with a cloud provider. You would like to create the infrastructure
+    for the first time. Which Terraform command should you run first?
+  A: terraform apply
+  B: terraform plan
+  C: terraform show
+  D: terraform init
+  Answer: D
+  Explanation: You need to initialize so all the provider plugin and
+    configurations dependencies get initialized
+- Question: All modules published on the official Terraform Module Registry have
+    been verified by HashiCorp.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Only modules considered "Verified Modules" are reviewed by
+    Hashicorp, otherwise anyone can publish modules on the Terraform Registry.
+- Question: Which of the following does terraform apply change after you approve
+    the execution plan? (Choose two.)
+  A: Cloud infrastructure
+  B: The .terraform directory
+  C: The execution plan
+  D: State file
+  E: Terraform code
+  Answer: A, D
+  Explanation: When you run terraform apply and approve the execution plan,
+    Terraform will make changes to the cloud infrastructure based on the desired
+    state defined in the Terraform code. Terraform will also update the state
+    file to reflect the new state of the infrastructure after the changes have
+    been made. Therefore, options A and D are correct.
+- Question: A Terraform backend determines how Terraform loads state and stores
+    updates when you execute ___________.
+  A: apply
+  B: taint
+  C: destroy
+  D: All of the above
+  E: None of the above
+  Answer: D
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/79163-exam-terraform-associate-topic-1-question-122-discussion/
+- Question: What does Terraform use .terraform.lock.hcl file for?
+  A: Tracking provider dependencies
+  B: There is no such file
+  C: Preventing Terraform runs from occurring
+  D: Storing references to workspaces which are locked
+  Answer: A
+  Explanation: https://developer.hashicorp.com/terraform/language/files/dependency-lock
+- Question: You've used Terraform to deploy a virtual machine and a database. You
+    want to replace this virtual machine instance with an identical one without
+    affecting the database. What is the best way to achieve this using
+    Terraform?
+  A: Use the terraform state rm command to remove the VM from state file
+  B: Use the terraform taint command targeting the VMs then run terraform plan and
+    terraform apply
+  C: Use the terraform apply command targeting the VM resources only
+  D: Delete the Terraform VM resources from your Terraform code then run terraform
+    plan and terraform apply
+  Answer: B
+  Explanation: terraform apply -target - just looks at applying part of the
+    config. In this case we'd need to taint the resource and then run an apply.
+- Question: How do you specify a module's version when publishing it to the public
+    Terraform Module Registry?
+  A: The module's configuration page on the Terraform Module Registry
+  B: Terraform Module Registry does not support versioning modules
+  C: The release tags in the associated repo
+  D: The module's Terraform code
+  Answer: C
+  Explanation: The registry uses tags to identify module versions. Release tag
+    names must be a semantic version, which can optionally be prefixed with a v
+    . For example, v1. 0.4 and 0.9.
+- Question: Terraform plan updates your state file.
+  A: true
+  B: false
+  Answer: B
+  Explanation: you need terraform apply to change the state file
+- Question: To check if all code in a Terraform configuration with multiple
+    modules is properly formatted without making changes, what command should be
+    run?
+  A: terraform fmt -check
+  B: terraform fmt -write-false
+  C: terraform fmt -list -recursive
+  D: terraform fmt -check -recursive
+  Answer: D
+  Explanation: terraform fmt -check -recursive, recursively checks all modules and
+    submodules for the format.
+- Question: As a member of the operations team, you need to run a script on a
+    virtual machine created by Terraform. Which provision is best to use in your
+    Terraform code?
+  A: null-exec
+  B: local-exec
+  C: remote-exec
+  D: file
+  Answer: C
+  Explanation: The remote-exec provisioner invokes a script on a remote resource
+    after it is created. To invoke a local process, see the local-exec
+    provisioner instead.
+- Question: >
+    You are using a networking module in your Terraform configuration with
+    the name label my_network. In your main configuration you have the following
+    code:
+
+    output: "net_id" {
+       value = module.my_network.vnet_id
+    }
+
+    When you run terraform validate, you get the following error:
+
+    Error: Reference to undeclared output value
+       on main.tf line 12, in output "net_id":
+       12:   value = module.my_network.vnet_id 
+    What must you do to successfully retrieve this value from your networking module?
+  A: Define the attribute vnet_id as a variable in the networking module
+  B: Change the referenced value to module.my_network.outputs.vnet_id
+  C: Define the attribute vnet_id as an output in the networking module
+  D: Change the referenced value to my_network.outputs.vnet_id
+  Answer: C
+  Explanation: In a parent module, outputs of child modules are available in
+    expressions as module.<MODULE NAME>.<OUTPUT NAME>. For example, if a child
+    module named web_server declared an output named instance_ip_addr, you could
+    access that value as module.web_server.instance_ip_addr.
+- Question: How can a ticket-based system slow down infrastructure provisioning
+    and limit the ability to scale? (Choose two.)
+  A: A full audit trail of the request and fulfillment process is generated
+  B: A request must be submitted for infrastructure changes
+  C: As additional resources are required, more tickets are submitted
+  D: A catalog of approved resources can be accessed from drop down lists in a
+    request form
+  Answer: B, C
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/80427-exam-terraform-associate-topic-1-question-131-discussion/
+- Question: Which of the following statements about Terraform modules is not true?
+  A: Modules must be publicly accessible
+  B: Modules can be called multiple times
+  C: Module is a container for one or more resources
+  D: Modules can call other modules
+  Answer: A
+  Explanation: In addition to modules from the local filesystem, Terraform can
+    load modules from a public or private registry. Also, members of your
+    organization might produce modules specifically crafted for your own
+    infrastructure needs.
+- Question: Which Terraform collection type should you use to store key/value pairs?
+  A: tuple
+  B: set
+  C: map
+  D: list
+  Answer: C
+  Explanation: Elements stored in key=value pairs within curly braces is a map.
+    So, the right option is C.
+- Question: You have used Terraform to create an ephemeral development environment
+    in the cloud and are now ready to destroy all the infrastructure described
+    by your Terraform configuration. To be safe, you would like to first see all
+    the infrastructure that will be deleted by Terraform. Which command should
+    you use to show all of the resources that will be deleted? (Choose two.)
+  A: Run terraform plan -destroy
+  B: Run terraform show -destroy
+  C: Run terraform destroy and it will first output all the resources that will be
+    deleted before prompting for approval
+  D: Run terraform show -destroy
+  Answer: A, C
+  Explanation: It is AC. terraform show only shows the state file
+- Question: When do you need to explicitly execute terraform refresh?
+  A: Before every terraform plan
+  B: Before every terraform apply
+  C: Before every terraform import
+  D: None of the above
+  Answer: D
+  Explanation: As per Terraform documentation refresh command is not recommended,
+    it is there only for backward compatibility
+- Question: All Terraform Cloud tiers support team management and governance.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Terraform Cloud is a commercial SaaS product developed by
+    HashiCorp. Many of its features are free for small teams, including remote
+    state storage, remote runs, and VCS connections. We also offer paid plans
+    for larger teams that include additional collaboration and governance
+    features. Each higher paid upgrade plan is a strict superset of any lower
+    plans — for example, the Team & Governance plan includes all of the features
+    of the Team plan.
+- Question: What advantage does an operations team that uses infrastructure as code have?
+  A: The ability to delete infrastructure
+  B: The ability to update existing infrastructure
+  C: The ability to reuse best practice configurations and settings
+  D: The ability to autoscale a group of servers
+  Answer: C
+  Explanation: https://www.examtopics.com/discussions/hashicorp/view/79167-exam-terraform-associate-topic-1-question-137-discussion/
+- Question: Terraform variable names are saved in the state file.
+  A: true
+  B: false
+  Answer: B
+  Explanation: You may check on your own environment, it isn't there.
+- Question: Terraform Cloud is available only as a paid offering from HashiCorp.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Many of Terraform Cloud features are free for small teams,
+    including remote state storage, remote runs, and VCS connections.
+- Question: You're writing a Terraform configuration that needs to read input from
+    a local file called id_rsa.pub.Which built-in Terraform function can you use
+    to import the file's contents as a string?
+  A: fileset("id_rsa.pub")
+  B: filebase64("id_rsa.pub")
+  C: templatefile("id_rsa.pub")
+  D: file("id_rsa.pub")
+  Answer: D
+  Explanation: file reads the contents of a file at the given path and returns
+    them as a string.
+- Question: What does Terraform use providers for? (Choose three.)
+  A: Provision resources for on-premises infrastructure services
+  B: Simplify API interactions
+  C: Provision resources for public cloud infrastructure services
+  D: Enforce security and compliance policies
+  E: Group a collection of Terraform configuration files that map to a single
+    state file
+  Answer: A, B, C
+  Explanation: A and C are the same with a alternate target, and terraform can
+    provision to local on prem resources (VMware for example) , B is pretty much
+    the reason providers are there
+- Question: How does Terraform determine dependencies between resources?
+  A: Terraform automatically builds a resource graph based on resources,
+    provisioners, special meta-parameters, and the state file, if present.
+  B: Terraform requires all dependencies between resources to be specified using
+    the depends_on parameter
+  C: Terraform requires resources in a configuration to be listed in the order
+    they will be created to determine dependencies
+  D: Terraform requires resource dependencies to be defined as modules and sourced
+    in order
+  Answer: A
+  Explanation: https://learn.hashicorp.com/tutorials/terraform/dependencies
+- Question: Which parameters does terraform import require? (Choose two.)
+  A: Path
+  B: Provider
+  C: Resource ID
+  D: Resource address
+  Answer: C, D
+  Explanation: https://www.terraform.io/cli/commands/import#usage
+- Question: Once a new Terraform backend is configured with a Terraform code
+    block, which command(s) is (are) used to migrate the state file?
+  A: terraform apply
+  B: terraform push
+  C: terraform destroy, then terraform apply
+  D: terraform init
+  Answer: D
+  Explanation: When you change a backend's configuration, you must run `terraform
+    init` again to validate and configure the backend before you can perform any
+    plans, applies, or state operations.
+- Question: |
+    What does this code do?
+    terrafrom {
+       required_providers {
+         aws = "~> 3.0"
+       }
+    }
+  A: Requires any version of the AWS provider >= 3.0 and < 4.0
+  B: Requires any version of the AWS provider >= 3.0
+  C: Requires any version of the AWS provider after the 3.0 major release, like
+    4.1
+  D: Requires any version of the AWS provider > 3.0
+  Answer: A
+  Explanation: The tilde allows only the rightmost version to increment.
+- Question: You are creating a Terraform configuration which needs to make use of
+    multiple providers, one for AWS and one for Datadog. Which of the following
+    provider blocks would allow you to do this?
+  A: |
+    provider "aws" {
+      profile = var.aws_profile
+      region = var.aws_region
+    }
+    provider "datadog" {
+      api_key = var.datadog_api_key
+      app_key = var.datadog_app_key
+    }
+  B: |
+    provider "aws" {
+      profile = var.aws_profile
+      region = var.aws_region
+    }
+
+    provider "datadog" {
+      api_key = var.datadog_api_key
+      app_key = var.datadog_app_key
+    }
+  C: |
+    terraform {
+      provider "aws" {
+        profile = var.aws_profile
+        region = var.aws_region
+      }
+
+      provider "datadog" {
+        api_key = var.datadog_api_key
+        app_key = var.datadog_app_key
+      }
+    }
+  Answer: B
+  Explanation: Is not A because each provider needs the 'provider' keyword to be
+    used. Not C because that example is used for config aliases. The correct
+    syntax for defining multiple providers in Terraform is provided in option B.
+- Question: You can reference a resource created with for_each using a Splat (*)
+    expression.
+  A: true
+  B: false
+  Answer: B
+  Explanation: You can’t refer to a resource using the splat operator [*] if the
+    resource uses a for_each argument. This is because in this case the resource
+    is a map of objects rather than a list of objects. The splat operator
+    applies only to lists.
+    https://developer.hashicorp.com/terraform/language/expressions/splat
+- Question: What does terrafrom refresh modify?
+  A: Your cloud infrastructure
+  B: Your state file
+  C: your terraform plan
+  D: Your terraform configuration
+  Answer: B
+  Explanation: The terraform refresh command reads the current settings from all
+    managed remote objects and updates the Terraform state to match.
+- Question: Which of the following is not a valid source path for specifying a module?
+  A: source ="./moduleversion=v1.0.0"
+  B: source = "github.com/hasicorp/example?ref=v1.0.0"
+  C: source = "./module"
+  D: source = "hashicorp/consul/aws"
+  Answer: A
+  Explanation: The pathway does not specify a module name or reference where a
+    module file is found.
+- Question: Which of the following is true about terraform apply? (Choose two.)
+  A: It only operates on infrastructure designed in the current working directory
+    or workspace
+  B: You must pass the output of a terraform plan command to it
+  C: Depending on provider specification, terraform may need to destroy and
+    recreate your infrastructure configuration
+  D: By default, it does not refresh your state file to reflect current
+    infrastructure configuration
+  E: you cannot target specific resources for the operation
+  Answer: A, C
+  Explanation: >
+    A. It only operates on infrastructure defined in the current
+    working directory or workspace. Terraform apply command will only perform
+    changes to the resources defined in the Terraform configuration files in the
+    current working directory or workspace. 
+
+    C. Depending on provider specification, Terraform may need to destroy and recreate your infrastructure resources: Terraform may need to destroy and recreate some of the resources if the provider requires it to apply changes, this is also known as create-before-destroy strategy
+- Question: Which of the following statements about local modules is incorrect?
+  A: Local modules are not cached by terraform init command
+  B: Local modules are sourced from a directory on disk
+  C: Local modules support versions
+  D: All of the above (all statements avobe are incorrect)
+  E: None of the above (all statements above are correct)
+  Answer: C
+  Explanation: In particular, modules sourced from local file paths do not support
+    version; since they're loaded from the same source repository, they always
+    share the same version as their caller.
+- Question: Which of the following is true about terraform's implementation of
+    infrastructure as code? (Choose two.)
+  A: It is only compatible with AWS infrastructure management
+  B: You cannot reuse infrastructure configuration
+  C: You can version your infrastructure configuration
+  D: It requires manual configuration of infrastructure resources
+  E: It allows you to automate infrastructure provisioning
+  Answer: C, E
+  Explanation: >
+    C. You can version your infrastructure configuration. Terraform
+    uses configuration files written in HashiCorp Configuration Language (HCL)
+    to define infrastructure resources. These files can be versioned using a
+    version control system (VCS) such as Git, allowing you to track changes to
+    your infrastructure over time and roll back to previous versions if
+    necessary. 
+
+    E. It allows you to automate infrastructure provisioning: Terraform's infrastructure as code approach allows you to automate the provisioning of infrastructure resources. By defining the desired state of your infrastructure in code, you can use Terraform to create, modify, and delete resources in an automated and repeatable way.
+- Question: >
+    You need to write some terraform code that adds 42 rewall rules to a
+    security group as shown in the example. 
+
+    resource "aws_security_group" "many_ryules" {
+      name = "many-rules"
+      ingress {
+        from_port = 443
+        to_port = 443
+        protocol = "tcp"
+        cidr_blocks = "0.0.0.0/0"
+      }
+    }
+
+    What can you use to avoid writing 42 different nested ingress config blocks by hand?
+  A: A count loop
+  B: A for block
+  C: A for each block
+  D: A dynamic block
+  Answer: D
+  Explanation: A dynamic block acts much like a for expression, but produces
+    nested blocks instead of a complex typed value. It iterates over a given
+    complex value, and generates a nested block for each element of that complex
+    value.
+- Question: Which of the following is the safest way to inject sensitive values
+    into a terraform cloud workspace?
+  A: Write the value to a file and specify the file with the -var-file flag
+  B: Set a value for the variable in the UI and check the "Sensitive" check box
+  C: Edit the state file directly just before running terraform apply
+  D: Set the variable value on the command line with the -var flag
+  Answer: B
+  Explanation: This ensures that the sensitive values are securely stored and
+    encrypted in the workspace, and are not visible in the Terraform logs or
+    state file. Writing the value to a file or setting the variable value on the
+    command line can expose the sensitive data to unauthorized access, and
+    editing the state file directly is not a recommended practice and can
+    potentially corrupt the state.
+- Question: terrafrom apply will fail if you have not used terraform plan first to
+    update the plan output.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Terraform plan is not mandatory. It just lays our the execution
+    plan. It is an optional command.
+- Question: >
+    How would you reference the attribute "name" of this fictitious
+    resource in HCL?
+
+
+    resource "kubernetes_namespace" "example" {
+      name = "test"
+    }
+  A: resource.kubernetes_namespce.example.name
+  B: kubernetes_namespace.test.name
+  C: kubernetes_namespace.example.name
+  D: data.kuberentes_namespace.name
+  E: None of the above
+  Answer: C
+  Explanation: https://www.terraform.io/language/expressions/references#references-to-resource-attributes
+- Question: A terraform output that sets the "sensitive" argument to true will not
+    store that value in the state file.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Terraform will still record sensitive values in the state, and so
+    anyone who can access the state data will have access to the sensitive
+    values in cleartext.
+- Question: You have been working in a Cloud provider account that is shared with
+    other team members. You previously used terraform to create a load balancer
+    that is listening on port 80. After some application changes, you updated
+    the terraform code to change the port to 443. You run terraform plan and see
+    that the execution plan shows the port changing from 80 to 443 like you
+    intended, and step away to grab some coffee. In the meantime, another team
+    member manually changes the load balancer port to 433 through the Cloud
+    provider console before you get back to your desk. What will happen when you
+    terraform apply upon returning to your desk?
+  A: terraform will fail with an error because the state file is no longer
+    accurate.
+  B: terraform will change the load balancer port to 80, and then change it back
+    to 443.
+  C: terraform will not make any changes to the Load Balancer and will update the
+    state file to reflect nay changes made.
+  D: terraform will change the port back to 80 in your code.
+  Answer: C
+  Explanation: As the state is refreshed during the "apply" no changes will be
+    made on the cloud. Terraform will rather update it state file.
+- Question: In a terraform cloud workspace linked to a version control repository,
+    speculative plan runs start automatically when you merge or commit changes
+    to version control.
+  A: true
+  B: false
+  Answer: A
+  Explanation: Whether to perform speculative plans on pull requests to the
+    connected repository, to assist in reviewing proposed changes. Automatic
+    speculative plans are enabled by default, but you can disable them for any
+    workspace.
+- Question: FILL IN THE BLANK - You need to migrate a workspace to use a remote
+    backend. After updating your configuration, what command do you run to
+    perform the migration?
+  Answer: terraform init
+  Explanation: Once you have authenticated to Terraform Cloud, you're ready to
+    migrate your local state file to Terraform Cloud. To begin the migration,
+    reinitialize. This causes Terraform to recognize your cloud block
+    configuration.
+- Question: When does Sentinel enforce policy logic during a terraform enterprise run?
+  A: Before the plan phase
+  B: During the plan phase
+  C: Before the apply phase
+  D: After the apply phase
+  Answer: C
+  Explanation: Enforcing policy checks on runs - Policies are checked when a run
+    is performed, after the terraform plan but before it can be confirmed or the
+    terraform apply is executed.
+- Question: Which are examples of infrastructure as code? (Choose two.)
+  A: Cloned virtual machine images
+  B: Change management database records
+  C: Versioned configurarion files
+  D: Docker files
+  Answer: C, D
+  Explanation: >
+    C. Versioned configuration files. Infrastructure as code is when
+    infrastructure is defined and managed using code, and configuration files
+    that are written in a programming language, such as JSON or YAML, and stored
+    in a version control system like Git, allowing for versioning and
+    collaboration. 
+
+    D. Docker files. Docker files are a type of infrastructure as code that describe how to build a container image. They are written in a simple programming language and can be versioned and stored in a version control system.
+- Question: You cannot install third party plugins using terraform init.
+  A: true
+  B: false
+  Answer: B
+  Explanation: For providers that are published in either the public Terraform
+    Registry or in a third-party provider registry, terraform init will
+    automatically find, download, and install the necessary provider plugins.
+- Question: When should terraform config files be written when running terraform
+    import on existing infrastructure?
+  A: infrastructure can be imported without corresponding terraform code
+  B: terraform will generate the corresponding configuration files for you
+  C: You should write terraform configuration files after the next terraform
+    import is executed
+  D: Terraform configuration should be written beofre terraform import is executed
+  Answer: D
+  Explanation: Terraform configuration should be written before terraform import
+    is executed. It's best to have the Terraform code reflect the current state
+    of the infrastructure so that Terraform can manage it.
+- Question: Which command lets you experiment with terramform's built-in functions?
+  A: terraform env
+  B: terraform console
+  C: terraform test
+  D: terraform validate
+  Answer: B
+  Explanation: https://developer.hashicorp.com/terraform/language/functions  "You
+    can experiment with the behavior of Terraform's built-in functions from the
+    Terraform expression console, by running the terraform console command."
+- Question: Terraform validates the syntax of Terraform files.
+  A: true
+  B: false
+  Answer: A
+  Explanation: The terraform validate command validates the syntax and arguments
+    of the Terraform configuration files.
+    https://www.terraform.io/docs/cli/code/index.html
+- Question: Which of the following can you do with terraform plan? (Choose two.)
+  A: Save a generated execution plan to apply later
+  B: Execute a plan in a different workspace
+  C: View the execution plan and check if the changes match your expectations
+  D: Schedule Terraform to run at a planned time in the future
+  Answer: A and C
+  Explanation: https://learn.hashicorp.com/tutorials/terraform/plan
+- Question: If a DevOps team adopts AWS CloudFormation as their standardized
+    method for provisioning public cloud resources, which of the follwoing
+    scenarios poses a challenge for this team?
+  A: The team is asked to build a reusable code base that can deploy resources
+    into any AWS region
+  B: The team is asked to manage a new application stack built on AWS-native
+    services
+  C: The organization decides to expand into Azure and wishes to deploy new
+    infrastructure using their existing codebase.
+  D: The DevOps team is tasked with automating a manual provisioning process
+  Answer: C
+  Explanation: https://developer.hashicorp.com/terraform/intro/vs/cloudformation
+- Question: While attempting to deploy resources into your cloud provider using
+    Terrafrom, you begin to see some odd behavior and experience sluggish
+    responses.  In order to troubleshoot, you decide to turn on Terraform
+    debugging.  Which environment variables must b configured to make
+    Terraform's logging more verbose?
+  A: TF_LOG_LEVEL
+  B: TF_LOG_FILE
+  C: TF_LOG
+  D: TP_LOG_PATH
+  Answer: C
+  Explanation: https://www.terraform.io/internals/debugging
+- Question: What does terraform destroy do?
+  A: Destroy all infrastructure in the Terraform state file
+  B: Destroy all Terraform code files in the current directory while leaving the
+    state file intact
+  C: Destroy all infrastructure in the configured Terraform provider
+  D: Destroy the Terraform stte file whil leaving infrastructure intact
+  Answer: A
+  Explanation: The terraform destroy command terminates resources managed by your
+    Terraform project. This command is the inverse of terraform apply in that it
+    terminates all the resources specified in your Terraform state. It does not
+    destroy resources running elsewhere that are not managed by the current
+    Terraform project.
+- Question: Open source Terraform can only import publicly-accessible and
+    open-source modules.
+  A: true
+  B: false
+  Answer: B
+  Explanation: Open source Terraform can import both publicly-accessible and
+    private modules from various sources, including Terraform Registry, GitHub,
+    GitLab, Bitbucket, and others. However, the support for private modules is
+    limited in the open source version, while it's fully supported in Terraform
+    Enterprise.
+- Question: |
+    Why does this backend configuration not follow best practices?
+    terraform {
+      backend "s3" {
+        bucket	= "terraform-state-prod"
+        key		= "network/terraform.tfstate"
+        region 	= "us-east-1"
+        access_key  = "AKIAIOSFOONN7EXAMPLE"
+        secret_key  = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"	
+      }
+  A: you should not store credentials in Terraform configuration
+  B: you should use the local enhanced storage backend whenever possible
+  C: An alias meta-argument should be included in backend blocks whenever possible
+  D: The backend configuration should contain multiple credentials so that more
+    than one user can execute terraform plan and terraform apply.
+  Answer: A
+  Explanation: null
+- Question: Which command lets you experiment with Terraform's built-in functions?
+  A: terraform env
+  B: terraform console
+  C: terraform test
+  D: terraform validate
+  Answer: B
+  Explanation: Access Key and Secret Key inside the config file? Really?
+- Question: When should Terraform configuration files be written when running
+    terraform import on existing infrastructure?
+  A: Infrastructure can be imported whithout corresponding Terraform code
+  B: Terraform will generate the corresponding configuration files for you.
+  C: You should write Terraform configuration files after the next terraform
+    import is executed
+  D: Terraform configuration should be written before terraform import is
+    executed.
+  Answer: D
+  Explanation: It's best to have the Terraform code reflect the current state of
+    the infrastructure so that Terraform can manage it.
+- Question: Which of the following locations can Terraform use as a private source
+    for modules? (Choose Two.)
+  A: Internally hosted SCM (Source Control Manager) platform
+  B: Public Terraform Module Registry
+  C: Private repository on GitHub
+  D: Public repository on GitHub
+  Answer: A and C
+  Explanation: >
+    A. Internally hosted SCM (Source Control Manager) platform.
+    Terraform allows you to specify a private SCM (Source Control Manager)
+    platform like GitLab, Bitbucket, etc as a source for modules. This allows
+    you to host your own modules within your organization's network, and use
+    them privately. 
+
+    C. Private repository on GitHub: Terraform allows you to specify a private repository on GitHub as a source for modules. This allows you to host your own modules on GitHub and use them privately.
+- Question: Where can Terraform not load a provider from?
+  A: Source code
+  B: Plugins directory
+  C: Official HashiCorp distribution on releases.hashicorp.com
+  D: Provider plugin
+  Answer: A
+  Explanation: no info about TF loading a provider directly from source code, so
+    this must be the correct answer.
+- Question: Which configuration consistency errors does terraform validate report?
+  A: A mix of spaces and tabs in configuration files
+  B: Differences between local and remote state
+  C: Terraform module isn't the latest version
+  D: Declaring a resource identifier more than once
+  Answer: D
+  Explanation: Terraform validate looks for syntax errors
+- Question: You have a Terraform configuration that defines a single virtual
+    machine with no references to it.  you have run terraform apply to create
+    the resource, and then removed the resource definition from your Terraform
+    configuration file.  What will happen when you run terraform appl in the
+    working directory again.
+  A: Nothing
+  B: Terraform will destroy the virtual machine
+  C: Terraform will error
+  D: Terraform will remove the virtual machine from thestate file, but the
+    resource will still exist
+  Answer: B
+  Explanation: When reference to resource is removed in config file the next
+    "terraform apply" will destroy the resource.
+- Question: Which provider authentication method prevents credentials from being
+    stored in the state file?
+  A: Using environment variables
+  B: Specifying the login credentials in the provider block
+  C: Setting credentials as Terraform Variables
+  D: None of the above
+  Answer: A
+  Explanation: You can use environment variables to store provider credentials and
+    other sensitive information, rather than storing them directly in the
+    Terraform configuration or state file.
+- Question: Running a terraform format without any arguments in a directory with
+    Terraform configuration files will check the formatting of those files
+    without changing their contents.
+  A: true
+  B: false
+  Answer: B
+  Explanation: The terraform fmt command is used to rewrite Terraform
+    configuration files to a canonical format and style.
+- Question: What command can you run to generate DOT (Document Template) formatted
+    data to visualize Terraform dependencies?
+  A: terraform refresh
+  B: terraform show
+  C: terraform graph
+  D: terraform output
+  Answer: C
+  Explanation: The terraform graph command is used to generate a visual
+    representation of either a configuration or execution plan. The output is in
+    the DOT format, which can be used by GraphViz to generate charts.
+- Question: As a member of an operations team that uses infrastructure as code
+    practices, you are tasked with making a change to an infrastructure stack
+    running in a public cloud.  Which pattern would follow IAC best practices
+    for making a change?
+  A: Clone the repository containing your infrastructure code and then run the
+    code
+  B: use the public cloud console to make the change after a database record has
+    been approved
+  C: Make the change programmatically via the public cloud CLI
+  D: Make the change via the public cloud API endpoint
+  E: Submit a pull request and wait fo an approved merge of the proposed changes
+  Answer: E
+  Explanation: Following IaC best practices, the recommended pattern for making a
+    change to an infrastructure stack running in a public cloud would be to
+    submit a pull request and wait for an approved merge of the proposed
+    changes.

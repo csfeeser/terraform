@@ -4,18 +4,18 @@
 
 
 
-Create a new directory and move into it:
+Head to your home directory.
 
-`student@bchd:~$` `mkdir -p ~/mycode/day3-warmup && cd ~/mycode/day3-warmup`
+`student@bchd:~$` `cd`
 
 Clone a solution that contains a simple Terraform root and child module.
 > **IMPORTANT-** you must include the "." at the end of this command!
 
-`student@bchd:~/mycode/day3-warmup$` `git clone https://github.com/rzfeeser/basic_terraform_module .`
+`student@bchd:~/day3-warmup$` `git clone https://github.com/rzfeeser/basic_terraform_module ~/day3-warmup`
 
 Make a new child module directory in the folder you just downloaded.
 
-`student@bchd:~/mycode/day3-warmup$` `mkdir ~/mycode/day3-warmup/my_modules/thedudeabides`
+`student@bchd:~/day3-warmup$` `mkdir -p ~/day3-warmup/my_modules/thedudeabides`
 
 ### OBJECTIVE:
 
@@ -37,7 +37,7 @@ resource "null_resource" "lebowski" {
    
 Create a .tf file inside your *thedudeabides* child module directory and place your resource block into it:
 
-`student@bchd:~/mycode/day3-warmup$` `vim ~/mycode/day3-warmup/my_modules/thedudeabides/main.tf`
+`student@bchd:~/day3-warmup$` `vim ~/day3-warmup/my_modules/thedudeabides/main.tf`
 
 ```hcl
 resource "null_resource" "lebowski" {
@@ -49,7 +49,7 @@ resource "null_resource" "lebowski" {
 
 Edit your `main.tf` file in your root module and add a module block that calls it:
 
-`student@bchd:~/mycode/day3-warmup$` `vim ~/mycode/day3-warmup/main.tf`
+`student@bchd:~/day3-warmup$` `vim ~/day3-warmup/main.tf`
 
 ```hcl
 # ADD AT THE END OF THE DOCUMENT

@@ -9,7 +9,6 @@ Head to your home directory.
 `student@bchd:~$` `cd`
 
 Clone a solution that contains a simple Terraform root and child module.
-> **IMPORTANT-** you must include the "." at the end of this command!
 
 `student@bchd:~/day3-warmup$` `git clone https://github.com/rzfeeser/basic_terraform_module ~/day3-warmup`
 
